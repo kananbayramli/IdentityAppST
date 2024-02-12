@@ -1,0 +1,34 @@
+# ASP.NET Core
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.user
+*.vscode
+*.vs
+
+# Entity Framework Core
+/appsettings.json
+/appsettings.Development.json
+*.edmx
+*.bak
+
+# Visual Studio Code
+.vscode/
+
+# SQL-related
+*.sqlproj
+*.sql
+*.db
+*.dbmdl
+*.ldf
+*.mdf
+*.ndf
+*.bak
+*.ldf
+*.suo
+*.log
+*.htm
+*.html
+*.xap
