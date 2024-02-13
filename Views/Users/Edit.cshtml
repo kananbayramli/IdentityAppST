@@ -16,15 +16,25 @@
         <input asp-for="Email" class="form-control">
     </div>
 
-    <div class="mb-3">
-        <label asp-for="Password"></label>
-        <input asp-for="Password" class="form-control">
+    <div class="card">
+        <div class="card-header">
+            Yeni parolu elave et
+        </div>
+
+        <div class="card-body">
+            <div class="mb-3">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" class="form-control">
+            </div>
+        </div>
     </div>
 
-    <div class="mb-3">
-        <label asp-for="ConfirmPassword"></label>
-        <input asp-for="ConfirmPassword" class="form-control">
-    </div>
+
 
     <button type="submit" class="btn btn-primary">Save</button>
 </form>

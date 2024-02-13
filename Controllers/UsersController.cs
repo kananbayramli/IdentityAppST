@@ -1,7 +1,9 @@
 using IdentityApp.Models;
 using IdentityApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace IdentityApp.Controllers;
 
@@ -68,5 +70,48 @@ public class UsersController : Controller
         }
 
         return RedirectToAction("Index");    
+    }
+
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(string id, EditViewModel model)
+    {
+        if(id != model.Id)
+        {
+            return NotFound();
+        }
+
+
+        if(ModelState.IsValid)
+        {
+            var user = await _userManager.FindByIdAsync(model.Id);
+
+            if(user != null)
+            {
+                user.Email = model.Email;
+                user.FullName = model.FullName;
+
+                var result = await _userManager.UpdateAsync(user);
+
+                if(result.Succeeded && !string.IsNullOrEmpty(model.Password))
+                {
+                    //burada userin parolunu silirik
+                    await _userManager.RemovePasswordAsync(user);
+                    //burada yeni parol qoyurug
+                    await _userManager.AddPasswordAsync(user, model.Password);
+                }
+
+
+                if(result.Succeeded){return RedirectToAction("Index");}
+
+
+                foreach(IdentityError err in result.Errors)
+                {
+                    ModelState.AddModelError("", err.Description);
+                }
+            }
+        }
+
+        return View(model);
     }
 }
