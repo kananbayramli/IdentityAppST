@@ -21,6 +21,16 @@ builder.Services.Configure<IdentityOptions>(options =>{
     options.Password.RequireDigit = false;
 
     options.User.RequireUniqueEmail = true;
+
+    //user login zamani sehv etdikde hesab 5 deqelik blocklanir
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    // 5 haqqi olur
+    options.Lockout.MaxFailedAccessAttempts = 5;
+});
+
+builder.Services.ConfigureApplicationCookie(options => {
+    options.LoginPath = "/Users/Login";
+    options.AccessDeniedPath = "/Account/AccessDenied";
 });
 
 var app = builder.Build();
@@ -37,7 +47,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
