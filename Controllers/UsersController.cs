@@ -35,7 +35,7 @@ public class UsersController : Controller
     {
         if(ModelState.IsValid)
         {
-            var user = new AppUser{UserName = model.Email, Email = model.Email, FullName= model.FullName};
+            var user = new AppUser{UserName = model.UserName, Email = model.Email, FullName= model.FullName};
             IdentityResult result = await _userManager.CreateAsync(user, model.Password);
 
             if(result.Succeeded)

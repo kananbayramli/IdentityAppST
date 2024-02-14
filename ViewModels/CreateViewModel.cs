@@ -4,6 +4,8 @@ namespace IdentityApp.ViewModels;
 
 public class CreateViewModel
 {
+    [Required]
+    public string UserName { get; set; } = string.Empty;
 
     [Required]
     public string FullName { get; set; } = string.Empty;
