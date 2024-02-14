@@ -29,7 +29,7 @@ builder.Services.Configure<IdentityOptions>(options =>{
 });
 
 builder.Services.ConfigureApplicationCookie(options => {
-    options.LoginPath = "/Users/Login";
+    options.LoginPath = "/Account/Login";
     options.AccessDeniedPath = "/Account/AccessDenied";
 });
 
