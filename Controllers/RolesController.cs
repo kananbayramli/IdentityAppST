@@ -15,7 +15,7 @@ public class RolesController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        return View(_roleManager.Roles);
     }
 
 
