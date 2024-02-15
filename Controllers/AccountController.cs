@@ -11,16 +11,19 @@ public class AccountController : Controller
     private readonly RoleManager<AppRole> _roleManager;
     private readonly UserManager<AppUser> _userManager;
     private readonly SignInManager<AppUser> _signInManager;
+    private IEmailSender _emailSender;
     
 
     public AccountController(
         RoleManager<AppRole> roleManager, 
         UserManager<AppUser> userManager,
-        SignInManager<AppUser> signInManager)
+        SignInManager<AppUser> signInManager,
+        IEmailSender emailSender)
     {
         _roleManager = roleManager;
         _userManager = userManager;
         _signInManager = signInManager;
+        _emailSender = emailSender;
     }
 
 
@@ -94,6 +97,8 @@ public class AccountController : Controller
                 var url = Url.Action("ConfirmEmail","Account", new {user.Id, token});
 
                 // email
+                await _emailSender.SendEmailAsync(user.Email, "Hesab tesdiqi", $"Zehmet olmasa hesabin tesdiqi ucun linke <a href='https://localhost:5213{url}'>klikleyin</a>");
+
                 TempData["message"] = "Email hesabinizdaki tesdiq mailini klikleyin";
                 return RedirectToAction("Login", "Account");
             }
