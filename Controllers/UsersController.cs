@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace IdentityApp.Controllers;
 
+[Authorize(Roles = "admin")]
 public class UsersController : Controller
 {
     private UserManager<AppUser> _userManager;
@@ -18,6 +19,8 @@ public class UsersController : Controller
         _roleManager  = roleManager;
     }
 
+
+    [AllowAnonymous]
     public IActionResult Index()
     {
         return View(_userManager.Users);
