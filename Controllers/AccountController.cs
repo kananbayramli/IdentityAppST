@@ -145,7 +145,30 @@ public class AccountController : Controller
 
     }
 
+    public async Task<IActionResult> ForgotPassword(string Email)
+    {
+        if(string.IsNullOrEmpty(Email))
+        {
+            TempData["message"] = "Email adresini daxil edin!";
+            return View();
+        }
 
+        var user = await _userManager.FindByEmailAsync(Email);
+        if(user == null)
+        {
+            TempData["message"] = "Email adrese uygun hesab tapilmadi!";
+            return View();
+        }
+
+        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        var url = Url.Action("ResetPassword", "Account", new {user.Id, token});
+
+        await _emailSender.SendEmailAsync(Email, "Parol Deyishme", $"Parolunuzu deyishmek ucun linke <a href='http://localhost:5213{url}'>klikleyin</a>.");
+
+        TempData["message"] = "Emailinize gonderilen linkle shifrenizi deyishe bilersiz";
+
+        return View();
+    }
 
 
 
